@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="zh-hans">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>ServiceWorker Demo</title>
+</head>
+<body>
+<script>
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+            navigator.serviceWorker.register('sw.js').then(function(registration){
+                // registration was successful
+                console.log('ServiceWorker registration successful with scope: ', registration.scope);
+            }).catch(function (err) {
+                // registration failed
+                console.log('ServiceWorker registration filed:', err);
+            })
+        })
+    }
+
+    fetch('/index.json').then(response => {
+        return response.json();
+    }).then(data => {
+        document.querySelector('h2').innerHTML = data['data'];
+    })
+
+</script>
+<h2>Init...</h2>
+</body>
+</html>
